@@ -1,0 +1,57 @@
+@import "tailwindcss";
+@theme {
+  --color-primary: #d21f72;
+  --color-primary-hover: #b81561; /* Darker, richer pink */
+  
+  --color-primary-variant: #e5438c;
+  --color-primary-variant-hover: #cc3277; /* Darker variant */
+
+  --color-secondary: #e6d829;
+  --color-secondary-hover: #cfc11b; /* Darker, less blinding yellow */
+
+  --color-secondary-variant: #e2af19;
+  --color-secondary-variant-hover: #c99a12;
+
+  --color-background: #121212;
+  --color-background-hover: #1c1c1c; /* Lighter for dark mode containers */
+
+  --color-background-surface: #1E1E1E;
+  --color-background-surface-hover: #292929; /* Lighter surface interaction */
+
+  --color-secondary-background: #FFFFFF;
+  --color-secondary-background-hover: #f5f5f5; /* Subtle off-white for light surfaces */
+
+  --color-primary-text: #ECEAE3;
+  --color-secondary-text: #c2c2c2;
+  
+  --color-accent: #A8C93B;
+  --color-accent-hover: #93b22f; /* Richer green */
+
+  --color-text: #fff;
+  
+  --color-text-h: #08060d;
+  --color-text-h-hover: #171324; /* Lighter dark-text background */
+
+  --color-text-secondary: rgba(255, 255, 255, 0.7);
+  --color-border: #e5e4e7;
+  --color-code-bg: #f4f3ec;
+  --color-accent-bg: rgba(170, 59, 255, 0.1);
+  --color-accent-border: rgba(170, 59, 255, 0.5);
+  --color-social-bg: rgba(244, 243, 236, 0.5);
+}
+
+/* Smooth global transitions for interactive elements */
+a, button, .interactive-card {
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+
+
+/* Active class hover state if applicable */
+.active:hover {
+  background: var(--color-text-h-hover);
+}
+
+body {
+  background: var(--color-background);
+}
