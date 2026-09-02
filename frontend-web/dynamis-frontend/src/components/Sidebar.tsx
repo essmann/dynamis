@@ -5,25 +5,29 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import StraightenIcon from "@mui/icons-material/Straighten";
 import BoltIcon from "@mui/icons-material/Bolt";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { Link } from "react-router-dom";
 
 export default function Sidebar({ style = "" }: { style?: string }) {
     const [activeItem, setActiveItem] = useState(0);
 
     const items = [
-        { name: "Overview", icon: <DashboardIcon /> },
-        { name: "Workouts", icon: <FitnessCenterIcon /> },
-        { name: "Measurements", icon: <StraightenIcon /> },
-        { name: "Exercises", icon: <BoltIcon /> },
-        { name: "Settings", icon: <SettingsIcon /> },
+        { name: "Overview", icon: <DashboardIcon />, href: "/" },
+        { name: "Workouts", icon: <FitnessCenterIcon />, href: "/workouts" },
+        { name: "Measurements", icon: <StraightenIcon />, href: "/about" },
+        { name: "Exercises", icon: <BoltIcon />, href: "/exercises" },
+        { name: "Settings", icon: <SettingsIcon />, href: "/settings" },
     ];
 
     return (
+
         <aside className={`
+        
             sidebar
             ${style}
             w-full
             md:w-64
-        `}>
+        `
+        }>
             <div className="
                 flex
                 flex-row
@@ -41,6 +45,7 @@ export default function Sidebar({ style = "" }: { style?: string }) {
                     text-primary-variant
                 ">
                     Dynamis
+
                 </div>
 
                 <nav className="
@@ -57,6 +62,7 @@ export default function Sidebar({ style = "" }: { style?: string }) {
                             <button
                                 key={item.name}
                                 onClick={() => setActiveItem(index)}
+
                                 className={`
                                     flex
                                     flex-col
@@ -73,20 +79,21 @@ export default function Sidebar({ style = "" }: { style?: string }) {
                                     text-text-secondary
 
                                     ${active
-                                        ? "bg-background-surface-hover border-primary"
+                                        ? "bg-background-surface-hover border-primary border-b-3 md:border-b-0"
                                         : "border-transparent"
                                     }
 
                                     hover:text-primary-variant-hover
                                 `}
                             >
-                                <span className="md:hidden">
-                                    {item.icon}
-                                </span>
+                                <Link to={item.href}>
+                                    <span className="md:hidden ">
+                                        {item.icon}
+                                    </span>
 
-                                <span className="hidden md:block">
-                                    {item.name}
-                                </span>
+                                    <span className="hidden md:block ">
+                                        {item.name}
+                                    </span></Link>
                             </button>
                         );
                     })}
