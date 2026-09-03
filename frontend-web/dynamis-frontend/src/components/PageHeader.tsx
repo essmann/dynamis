@@ -9,7 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 export default function PageHeader({ title, onBack, onCreate }: PageHeaderProps) {
     return (
         <div className="page-header flex *:text-text w-full mt-2 items-center">
-            <button className='flex justify-center  ml-1 ' onClick={onBack}><ArrowBackIcon /></button>
+            <button className='flex justify-center  ml-1 hover:bg-red-500' onClick={onBack}><ArrowBackIcon /></button>
             <div className='flex w-full justify-center  '>
                 <div className=''>{title}</div>
             </div>

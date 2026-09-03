@@ -29,6 +29,9 @@
   --color-secondary-background: #FFFFFF;
   --color-secondary-background-hover: #F5F5F5;
 
+  --color-success: #4caf50;
+  --color-error: #d32f2f;
+
   /* Text — Material spec uses black-based opacities on light surfaces,
      not pure white/black flips. */
   --color-text: #000000;                       /* on-primary/on-accent text, since primary/accent are saturated */

@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import StraightenIcon from "@mui/icons-material/Straighten";
 import BoltIcon from "@mui/icons-material/Bolt";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default function Sidebar({ style = "" }: { style?: string }) {
     const [activeItem, setActiveItem] = useState(0);
+    const location = useLocation();
 
     const items = [
         { name: "Overview", icon: <DashboardIcon />, href: "/" },
@@ -18,6 +20,11 @@ export default function Sidebar({ style = "" }: { style?: string }) {
         { name: "Settings", icon: <SettingsIcon />, href: "/settings" },
     ];
 
+    useEffect(() => {
+        // runs every time the pathname changes
+        const matched = items.findIndex((el) => el.href == location.pathname)
+        setActiveItem(matched || 0);
+    }, [location.pathname]);
     return (
         <aside className={`
       sidebar
