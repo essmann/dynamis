@@ -39,12 +39,12 @@ export default function MeasurementsPage() {
             ) : (
                 <>
                     <PageHeader title="Measurements" onBack={() => navigate("/")} onCreate={() => setAddWeight(true)} />
-                    <WeightPage entries={sampleEntries} /></>
+                    <HistoryTrackingView entries={sampleEntries} /></>
             )}
         </>
     );
 }
-function WeightPage({ entries = [] }: { entries?: WeightEntry[] }) {
+function HistoryTrackingView({ entries = [] }: { entries?: WeightEntry[] }) {
     return (
         <div>
             {/* <PageHeader title="Measurements" onBack={() => ""} onCreate={() => ""} /> */}
@@ -62,7 +62,7 @@ function WeightPage({ entries = [] }: { entries?: WeightEntry[] }) {
 
                 </div>
                 <div className="flex flex-col flex-1 min-h-0 overflow-y-auto mt-8">
-                    <WeightHistory entries={entries} />
+                    <HistoryList entries={entries} />
                 </div>
                 {/* <div className="absolute w-full flex">
                 <button className="absolute p-3  bg-red-500 w-auto ">hi</button>
@@ -72,7 +72,7 @@ function WeightPage({ entries = [] }: { entries?: WeightEntry[] }) {
     )
 }
 
-function WeightHistory({ entries = [] }: { entries?: WeightEntry[] }) {
+function HistoryList({ entries = [] }: { entries?: WeightEntry[] }) {
     return (
         <>
             <div className="ml-3 text-text-secondary font-bold ">History</div>
@@ -82,7 +82,7 @@ function WeightHistory({ entries = [] }: { entries?: WeightEntry[] }) {
                 {entries?.map((w, index) => {
                     let prev;
                     if (index < entries.length && index > 0) prev = entries[index - 1].weight;
-                    return <WeightHistoryEntry key={`${w.date}-${index}`}
+                    return <HistoryEntry key={`${w.date}-${index}`}
                         date={w.date} weight={w.weight} prev={prev} />;
                 })}
             </div>
@@ -90,7 +90,7 @@ function WeightHistory({ entries = [] }: { entries?: WeightEntry[] }) {
     )
 }
 
-function WeightHistoryEntry({ prev, date, weight }: { prev?: number, date: string, weight: number }) {
+function HistoryEntry({ prev, date, weight }: { prev?: number, date: string, weight: number }) {
     const computeChange = () => {
         console.log(`weight: ${weight} prev: ${prev} diff: ${parseFloat(Number(weight - prev!).toFixed(2))}`)
         if (prev == 0 || prev === null) return 0;
@@ -105,7 +105,7 @@ function WeightHistoryEntry({ prev, date, weight }: { prev?: number, date: strin
 text-text border-background-hover    box-border justify-between">
             <div className="flex">
                 <div className="">{computeRelativeDate(date)}</div>
-                <span className="ml-1 *:ml-1">
+                <span className="ml-1 *:ml-1 *:">
                     {change < 0 && <span className="text-error font-bold"> {change} </span>}
                     {change > 0 && <span className="text-success font-bold"> +{change} </span>}
                 </span>
