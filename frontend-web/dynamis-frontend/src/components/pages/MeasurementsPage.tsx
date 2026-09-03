@@ -50,15 +50,18 @@ export default function MeasurementsPage() {
         //Custom tag click from dropdown
 
     }
+    const onHeaderCreateClick = () => {
+        if (selectedTag === "Weight") setAddWeight(true);
+    }
     return (
         <>
-            <PageHeader title="Measurements" onCreate={() => ""} onBack={() => ""} />
+            <PageHeader title="Measurements" onCreate={onHeaderCreateClick} onBack={() => ""} />
             <Tags tags={tags} selectedTag={selectedTag} onClick={onTagClick} />
             {selectedTag === "Weight" && (
                 <WeightPage
                     showAddWeightPanel={addWeight}
                     entries={sampleEntries}
-                    setAddWeight={() => ""}
+                    setAddWeight={setAddWeight}
                     onAddWeight={() => ""}
                 />
             )}
@@ -105,7 +108,7 @@ function Tags({
                         setShowDropDown(false);
                         onClick(tag);
                     }}
-                    entries={["TestA", "TestB", "TestC", "TestD"]}
+                    entries={["Biceps", "Penis", "Wrists", "Waist"]}
                 />
             )}
 
