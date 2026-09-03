@@ -10,8 +10,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Slider from '@mui/material/Slider';
 export default function MeasurementsPage() {
+
     const navigate = useNavigate();
     const [addWeight, setAddWeight] = useState(false);
+    const [selectedTag, setSelectedTag] = useState("Weight");
     const sampleEntries: WeightEntry[] = [
         { date: "2026-08-19", weight: 84.2 },
         { date: "2026-08-20", weight: 84.0 },
@@ -31,6 +33,7 @@ export default function MeasurementsPage() {
         { date: "2026-09-02", weight: 92.4 },
 
     ];
+    const onTagClick = (tagName: string) => setSelectedTag(tagName);
     return (
         <>
 
@@ -39,10 +42,29 @@ export default function MeasurementsPage() {
             ) : (
                 <>
                     <PageHeader title="Measurements" onBack={() => navigate("/")} onCreate={() => setAddWeight(true)} />
+                    <Tags selectedTag={selectedTag} onClick={onTagClick} />
                     <HistoryTrackingView entries={sampleEntries} /></>
             )}
         </>
     );
+}
+function Tags({ selectedTag, onClick }: { selectedTag: string, onClick: (str: string) => void }) {
+
+    return (
+        <div className="measurement-tags mt-2">
+            <div className="text-text ml-2 flex ">
+                <div className="font-bold text-2xl ">
+                    <button onClick={() => onClick("Weight")} className={`${selectedTag == "Weight" ? "bg-primary" : "  bg-background-surface   opacity-50 text-text  "} 
+                    p-1.5 ml-1 text-sm text-background-surface rounded-xl hover:bg-primary cursor-pointer `}>Weight</button>
+                </div>
+                <div className="font-bold text-2xl ">
+                    <button onClick={() => onClick("Other")} className={`${selectedTag == "Other" ? "bg-primary" : "  bg-background-surface   opacity-50 text-text  "} 
+                    p-1.5 ml-1 text-sm text-background-surface rounded-xl hover:bg-primary cursor-pointer `}>Other</button>
+                </div>
+
+            </div>
+        </div>
+    )
 }
 function HistoryTrackingView({ entries = [] }: { entries?: WeightEntry[] }) {
     return (
@@ -54,13 +76,13 @@ function HistoryTrackingView({ entries = [] }: { entries?: WeightEntry[] }) {
                  mt-5">
                     <WeightChart entries={entries} />
                 </div>
-                <div className="text-text ml-2">
+                {/* <div className="text-text ml-2">
                     <div className="font-bold text-2xl">
                         <span className="bg-primary rounded-md text-background-surface  
                         p-1.5 ml-1 text-sm">Weight</span>
                     </div>
 
-                </div>
+                </div> */}
                 <div className="flex flex-col flex-1 min-h-0 overflow-y-auto mt-8">
                     <HistoryList entries={entries} />
                 </div>
