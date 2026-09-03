@@ -1,57 +1,65 @@
 @import "tailwindcss";
 @theme {
-  --color-primary: #d21f72;
-  --color-primary-hover: #b81561; /* Darker, richer pink */
-  
+  /* Primary */
+  --color-primary: #008CFF;
+  --color-primary-hover: #b81561;
   --color-primary-variant: #e5438c;
-  --color-primary-variant-hover: #cc3277; /* Darker variant */
+  --color-primary-variant-hover: #cc3277;
 
+  /* Secondary */
   --color-secondary: #e6d829;
-  --color-secondary-hover: #cfc11b; /* Darker, less blinding yellow */
-
+  --color-secondary-hover: #cfc11b;
   --color-secondary-variant: #e2af19;
   --color-secondary-variant-hover: #c99a12;
 
-  --color-background: #121212;
-  --color-background-hover: #1c1c1c; /* Lighter for dark mode containers */
+  /* Accent */
+  --color-accent: #A8C93B;
+  --color-accent-hover: #93b22f;
 
-  --color-background-surface: #1E1E1E;
-  --color-background-surface-hover: #292929; /* Lighter surface interaction */
+  /* Material light theme surfaces:
+     background = app canvas, surface = cards/sheets/dialogs.
+     MD light spec keeps both near-white, surface slightly lighter/flat white,
+     with elevation conveyed via shadow, not color, in light mode. */
+  --color-background: #FAFAFA;
+  --color-background-hover: #F0F0F0;
+
+  --color-background-surface: #FFFFFF;
+  --color-background-surface-hover: #F5F5F5;
 
   --color-secondary-background: #FFFFFF;
-  --color-secondary-background-hover: #f5f5f5; /* Subtle off-white for light surfaces */
+  --color-secondary-background-hover: #F5F5F5;
 
-  --color-primary-text: #ECEAE3;
-  --color-secondary-text: #c2c2c2;
-  
-  --color-accent: #A8C93B;
-  --color-accent-hover: #93b22f; /* Richer green */
+  /* Text — Material spec uses black-based opacities on light surfaces,
+     not pure white/black flips. */
+  --color-text: #000000;                       /* on-primary/on-accent text, since primary/accent are saturated */
+  --color-text-primary: rgba(0, 0, 0, 0.87);    /* high-emphasis body text */
+  --color-text-secondary: rgba(0, 0, 0, 0.60);  /* medium-emphasis text */
+  --color-text-disabled: rgba(0, 0, 0, 0.38);   /* disabled/hint text */
 
-  --color-text: #fff;
-  
   --color-text-h: #08060d;
-  --color-text-h-hover: #171324; /* Lighter dark-text background */
+  --color-text-h-hover: rgba(0, 0, 0, 0.04);    /* MD hover overlay, not a dark fill */
 
-  --color-text-secondary: rgba(255, 255, 255, 0.7);
-  --color-border: #e5e4e7;
-  --color-code-bg: #f4f3ec;
-  --color-accent-bg: rgba(170, 59, 255, 0.1);
-  --color-accent-border: rgba(170, 59, 255, 0.5);
-  --color-social-bg: rgba(244, 243, 236, 0.5);
+  /* Material also defines an error color — add if you don't have one elsewhere */
+  --color-error: #B00020;
+  --color-error-hover: #98001b;
 }
 
-/* Smooth global transitions for interactive elements */
+* {
+}
+body {
+  
+  font-family: "roboto", sans-serif !important;
+}
+
 a, button, .interactive-card {
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
-
-
-/* Active class hover state if applicable */
 .active:hover {
   background: var(--color-text-h-hover);
 }
 
 body {
   background: var(--color-background);
+  color: var(--color-text-primary);
 }
