@@ -9,11 +9,13 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Slider from '@mui/material/Slider';
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 export default function MeasurementsPage() {
-
     const navigate = useNavigate();
+
     const [addWeight, setAddWeight] = useState(false);
     const [selectedTag, setSelectedTag] = useState("Weight");
+    const [tags, setTags] = useState(["Weight", "Other"]);
     const sampleEntries: WeightEntry[] = [
         { date: "2026-08-19", weight: 84.2 },
         { date: "2026-08-20", weight: 84.0 },
@@ -33,39 +35,115 @@ export default function MeasurementsPage() {
         { date: "2026-09-02", weight: 92.4 },
 
     ];
-    const onTagClick = (tagName: string) => setSelectedTag(tagName);
+    const onTagClick = (tagName: string) => {
+        setSelectedTag(tagName);
+        console.log(`selected tag ${tagName}`);
+
+        //Custom tags 
+        if (tagName !== "Weight") {
+            if (tags.length > 2) {
+                tags.pop()
+                setTags(prev => prev.slice(0, -1));
+            }
+            setTags([...tags, tagName])
+        }
+        //Custom tag click from dropdown
+
+    }
     return (
         <>
-
-            {addWeight ? (
-                <AddWeightPage onClose={() => setAddWeight(false)} onSubmit={() => ""} />
-            ) : (
-                <>
-                    <PageHeader title="Measurements" onBack={() => navigate("/")} onCreate={() => setAddWeight(true)} />
-                    <Tags selectedTag={selectedTag} onClick={onTagClick} />
-                    <HistoryTrackingView entries={sampleEntries} /></>
+            <PageHeader title="Measurements" onCreate={() => ""} onBack={() => ""} />
+            <Tags tags={tags} selectedTag={selectedTag} onClick={onTagClick} />
+            {selectedTag === "Weight" && (
+                <WeightPage
+                    showAddWeightPanel={addWeight}
+                    entries={sampleEntries}
+                    setAddWeight={() => ""}
+                    onAddWeight={() => ""}
+                />
             )}
         </>
     );
 }
-function Tags({ selectedTag, onClick }: { selectedTag: string, onClick: (str: string) => void }) {
+function WeightPage({ showAddWeightPanel, entries, setAddWeight, onAddWeight }: { showAddWeightPanel: boolean, entries: WeightEntry[], setAddWeight: (b: boolean) => void, onAddWeight: () => void }) {
+    return (
+        showAddWeightPanel ? <AddWeightPage onClose={() => setAddWeight(false)} onSubmit={() => ""} /> :
+            <HistoryTrackingView entries={entries} />
+    )
+}
+function Tags({
+    tags,
+    selectedTag,
+    onClick,
+}: {
+    tags: string[];
+    selectedTag: string;
+    onClick: (str: string) => void;
+}) {
+    const [showDropDown, setShowDropDown] = useState(false);
+
+    const buttonClassName = `
+        p-1.5 ml-1 text-sm text-background-surface rounded-xl
+        hover:bg-primary cursor-pointer
+    `;
+
+    const handleTagClick = (tag: string) => {
+        if (tag === "Other") {
+            setShowDropDown(true);
+            return;
+        }
+
+        onClick(tag);
+    };
 
     return (
         <div className="measurement-tags mt-2">
-            <div className="text-text ml-2 flex ">
-                <div className="font-bold text-2xl ">
-                    <button onClick={() => onClick("Weight")} className={`${selectedTag == "Weight" ? "bg-primary" : "  bg-background-surface   opacity-50 text-text  "} 
-                    p-1.5 ml-1 text-sm text-background-surface rounded-xl hover:bg-primary cursor-pointer `}>Weight</button>
-                </div>
-                <div className="font-bold text-2xl ">
-                    <button onClick={() => onClick("Other")} className={`${selectedTag == "Other" ? "bg-primary" : "  bg-background-surface   opacity-50 text-text  "} 
-                    p-1.5 ml-1 text-sm text-background-surface rounded-xl hover:bg-primary cursor-pointer `}>Other</button>
-                </div>
+            {showDropDown && (
+                <TagDropDown
+                    onClose={() => setShowDropDown(false)}
+                    onClick={(tag) => {
+                        setShowDropDown(false);
+                        onClick(tag);
+                    }}
+                    entries={["TestA", "TestB", "TestC", "TestD"]}
+                />
+            )}
 
+            <div className="text-text ml-2 flex">
+                {tags?.map((tag) => (
+                    <div key={tag} className="font-bold text-2xl">
+                        <button
+                            onClick={() => handleTagClick(tag)}
+                            className={`${buttonClassName} ${selectedTag === tag ? "bg-primary" : "bg-background-surface  text-text opacity-50"}`}
+                        >
+                            {tag}
+                        </button>
+                    </div>
+                ))}
             </div>
         </div>
-    )
+    );
 }
+
+
+function TagDropDown({ entries, onClick, onClose }: { entries: string[], onClick: (tag: string) => void, onClose: () => void }) {
+    return (
+        <ClickAwayListener onClickAway={onClose}>
+            <div className="tag-dropdown flex flex-col absolute top-20 left-20
+          p-2 h-50 w-50 *:hover:bg-primary bg-background-surface  border-1 rounded border-background-surface-hover">
+                <div className="flex "> <button onClick={() => ""}
+                    className=" mt-1 p-1 bg-primary rounded-md text-background-surface font-bold">Add+</button> </div>
+                <div className="flex flex-col items-start ">
+                    {entries?.map((entry) =>
+                        <button onClick={() => onClick(entry)}
+                            className="mt-1 p-1 border-b-1 border-background-hover text-text" key={entry}>{entry}
+                        </button>)}
+                </div>
+            </div>
+        </ClickAwayListener>
+    );
+}
+//Shows a graph and a list of values
 function HistoryTrackingView({ entries = [] }: { entries?: WeightEntry[] }) {
     return (
         <div>
