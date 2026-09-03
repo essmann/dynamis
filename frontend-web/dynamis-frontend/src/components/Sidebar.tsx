@@ -63,10 +63,11 @@ export default function Sidebar({ style = "" }: { style?: string }) {
                         const active = activeItem === index;
 
                         return (
-                            <button
-                                key={item.name}
-                                onClick={() => setActiveItem(index)}
-                                className={`
+                            <Link to={item.href}>
+                                <button
+                                    key={item.name}
+                                    onClick={() => setActiveItem(index)}
+                                    className={`
                   flex
                   flex-col
                   md:flex-row
@@ -83,14 +84,13 @@ export default function Sidebar({ style = "" }: { style?: string }) {
                   hover:bg-background-surface-hover
 
                   ${active
-                                        ? "bg-primary/10 border-primary text-primary border-b-3 md:border-b-0"
-                                        : "border-transparent"
-                                    }
+                                            ? "bg-primary/10 border-primary text-primary border-b-3 md:border-b-0"
+                                            : "border-transparent"
+                                        }
 
                   hover:text-h-hover
                 `}
-                            >
-                                <Link to={item.href}>
+                                >
                                     <span className="md:hidden ">
                                         {item.icon}
                                     </span>
@@ -98,8 +98,7 @@ export default function Sidebar({ style = "" }: { style?: string }) {
                                     <span className="hidden md:block ">
                                         {item.name}
                                     </span>
-                                </Link>
-                            </button>
+                                </button></Link>
                         );
                     })}
                 </nav>

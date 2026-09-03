@@ -42,6 +42,7 @@ export default function WeightChart({ entries = [] }: { entries?: WeightEntry[] 
                         pointRadius: 0,
                     }],
                 },
+
             options: {
                 plugins: { legend: { display: true } },
             },

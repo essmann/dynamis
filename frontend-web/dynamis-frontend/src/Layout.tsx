@@ -3,14 +3,12 @@ import Sidebar from "./components/Sidebar";
 
 export function Layout() {
     return (
+        <div className="h-dvh w-full overflow-hidden flex flex-col-reverse md:flex-row">
+            <Sidebar />
 
-        <div className='app-container flex flex-col-reverse 
-        md:flex-row lg:flex-row h-screen w-screen
-        overflow-x-hidden'>
-            <Sidebar style='bg- lg:flex-1' />
-            <div className='main w-full h-full md:flex-7 md:w-auto overflow-scroll'>
+            <main className="min-h-0 flex-1 overflow-y-auto">
                 <Outlet />
-            </div>
+            </main>
         </div>
-    )
+    );
 }

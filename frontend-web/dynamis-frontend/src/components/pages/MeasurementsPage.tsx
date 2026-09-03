@@ -16,7 +16,7 @@ export default function MeasurementsPage() {
     const [addWeight, setAddWeight] = useState(false);
     const [selectedTag, setSelectedTag] = useState("Weight");
     const [tags, setTags] = useState(["Weight", "Other"]);
-    const sampleEntries: WeightEntry[] = [
+    let sampleEntries: WeightEntry[] = [
         { date: "2026-08-19", weight: 84.2 },
         { date: "2026-08-20", weight: 84.0 },
         { date: "2026-08-21", weight: 84.1 },
@@ -35,6 +35,9 @@ export default function MeasurementsPage() {
         { date: "2026-09-02", weight: 92.4 },
 
     ];
+    const mockWeightAdd = (entry: WeightEntry) => {
+
+    }
     const onTagClick = (tagName: string) => {
         setSelectedTag(tagName);
         console.log(`selected tag ${tagName}`);
@@ -112,12 +115,13 @@ function Tags({
                 />
             )}
 
-            <div className="text-text ml-2 flex">
+            <div className="text-text ml-2 flex md:justify-center">
                 {tags?.map((tag) => (
                     <div key={tag} className="font-bold text-2xl">
                         <button
                             onClick={() => handleTagClick(tag)}
-                            className={`${buttonClassName} ${selectedTag === tag ? "bg-primary" : "bg-background-surface  text-text opacity-50"}`}
+                            className={` md:w-50 md:p-2
+                                ${buttonClassName} ${selectedTag === tag ? "bg-primary" : "bg-background-surface  text-text opacity-50"}`}
                         >
                             {tag}
                         </button>
@@ -149,36 +153,36 @@ function TagDropDown({ entries, onClick, onClose }: { entries: string[], onClick
 //Shows a graph and a list of values
 function HistoryTrackingView({ entries = [] }: { entries?: WeightEntry[] }) {
     return (
-        <div>
-            {/* <PageHeader title="Measurements" onBack={() => ""} onCreate={() => ""} /> */}
-            <div className="measurements flex flex-col h-full md:items-center">
-                <div className="measurements-chart
-                 md:w-7xl md:justify-center align-center
-                 mt-5">
+        <div className="h-full">
+            <div className="measurements flex flex-col h-full md:items-stretch md:flex-row-reverse">
+                <div className="
+                    measurements-chart
+                    md:flex-1
+                    md:h-full
+                    mt-5
+                ">
                     <WeightChart entries={entries} />
                 </div>
-                {/* <div className="text-text ml-2">
-                    <div className="font-bold text-2xl">
-                        <span className="bg-primary rounded-md text-background-surface  
-                        p-1.5 ml-1 text-sm">Weight</span>
-                    </div>
 
-                </div> */}
-                <div className="flex flex-col flex-1 min-h-0 overflow-y-auto mt-8">
+                <div className="
+                    flex flex-col
+                    md:flex-1
+                    min-h-0
+                    overflow-y-auto
+                    mt-8 md:mt-5
+                ">
                     <HistoryList entries={entries} />
                 </div>
-                {/* <div className="absolute w-full flex">
-                <button className="absolute p-3  bg-red-500 w-auto ">hi</button>
-            </div> */}
             </div>
         </div>
-    )
+    );
 }
 
 function HistoryList({ entries = [] }: { entries?: WeightEntry[] }) {
     return (
         <>
             <div className="ml-3 text-text-secondary font-bold ">History</div>
+            {entries?.length == 0 && <div className="ml-3 text-xl">Press the + icon to add an entry.</div>}
             <div className="weight-history
             flex
              flex-col-reverse ">
