@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../PageHeader";
 import WeightChart, { type WeightEntry } from "../WeightChart";
-import WeightGoalRing from "../WeightGoalPie";
-import WeightGoalPie from "../WeightGoalPie";
 import { useState, type ChangeEvent } from "react";
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import dayjs from 'dayjs';
@@ -10,6 +8,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Slider from '@mui/material/Slider';
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import { computeRelativeDate } from "@dynamis/shared"
 export default function MeasurementsPage() {
     const navigate = useNavigate();
 
@@ -301,15 +300,4 @@ function AddWeightPage({ onClose, onSubmit }: { onClose: () => void, onSubmit: (
             <div></div>
         </>
     )
-}
-//Gets day of the week if it was less than one week ago, the string date otherwise.
-const computeRelativeDate = (date: string): string => {
-    const dateEpoch = Math.floor(Date.parse(date) / 1000);
-    const nowEpoch = Math.floor(Date.now() / 1000);
-    const oneWeekInSeconds = 7 * 24 * 60 * 60;
-    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const day = new Date(dateEpoch * 1000).getDay();
-    return dateEpoch <= nowEpoch && dateEpoch >= (nowEpoch - oneWeekInSeconds) ? daysOfWeek[day] : date;
-
-
 }
