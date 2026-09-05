@@ -1,0 +1,9 @@
+{
+    "name": "monorepo-root",
+    "private": true,
+    "workspaces": [
+        "frontend-mobile/my-app",
+        "frontend-web/dynamis-frontend",
+        "packages/*"
+    ]
+}
