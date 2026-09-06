@@ -1,4 +1,4 @@
-import { HistoryEntry } from "./types";
+import { type HistoryEntry } from "./types";
 
 export const sampleEntries: HistoryEntry[] = [
     { date: "2026-08-19", value: 84.2 },
@@ -15,7 +15,14 @@ export const sampleEntries: HistoryEntry[] = [
     { date: "2026-08-30", value: 82.8 },
     { date: "2026-08-31", value: 82.7 },
     { date: "2026-09-01", value: 82.5 },
+    { date: "2026-09-01", value: 82.5 },
+    { date: "2026-09-01", value: 82.5 },
+    { date: "2026-09-02", value: 82.4 },
     { date: "2026-09-02", value: 82.4 },
     { date: "2026-09-02", value: 92.4 },
+    { date: "2026-09-02", value: 92.4 },
+    { date: "2026-09-02", value: 92.4 },
+    { date: "2026-09-01", value: 100.5 },
+
 
 ];
